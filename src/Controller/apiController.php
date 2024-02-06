@@ -15,17 +15,16 @@ class apiController extends AbstractController
     public function test(EntityManagerInterface $entityManager, Request $request): Response
     {
 
-        // $hehe = $request -> getContent;
-        $hehe = $request->getMethod();
-
+        $reqMethod = $request->getMethod();
+        $reqData = $request->getContent();
 
         $user = $entityManager->getRepository(User::class)->find(1);
         $userMail = $user->getEmail();
-
+        
         $response['data'] = $userMail;
-        $response['test-data'] = ' asdasd asd<>?>?>?>';
-        $response['test-datae'] = json_decode($hehe);
-
+        $response['test-enconding-special-chars'] = ' asdasd asd<>?>?>?>';
+        $response['test-request-method'] = $reqMethod;
+        $response['test-data'] = json_decode($reqData);
         
         $data = json_encode($response);
 
