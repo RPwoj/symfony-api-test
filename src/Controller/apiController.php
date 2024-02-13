@@ -33,19 +33,19 @@ class apiController extends AbstractController
                 $userCheck = $user->findOneBy(['email' => $reqData['email']]);
                 
                 if ($userCheck) {
-                    $response['data'] = 'User ' . $userCheck . ' alreqady exist';
+                    $response['data'] = 'User ' . $userCheck . ' already exist';
 
                 } else {
                     $canRegister = true;
 
                     if (strlen($reqData['pass']) < 7) {
                         $canRegister = false;
-                        $response['errorPass'] = 'passwords are different';
+                        $response['errorPass'] = 'password is too short';
                     }
 
                     if ($reqData['pass'] != $reqData['passRep']) {
                         $canRegister = false;
-                        $response['errorPassRep'] = 'hasłą się różnią';
+                        $response['errorPassRep'] = 'passwords are different';
                     } 
                     
                     if ($reqData['inputAcc'] == false) {
@@ -66,7 +66,7 @@ class apiController extends AbstractController
                         $entityManager->persist($newUser);
                         $entityManager->flush();
     
-                        $response['data'] = 'user ' . $reqData['email'] . ' has been registered';
+                        $response['data'] = 'User ' . $reqData['email'] . ' has been registered';
                     }
                 }
                 /* $response['test-enconding-special-chars'] = ' asdasd asd<>?>?>?>'; */
@@ -92,7 +92,7 @@ class apiController extends AbstractController
                     }
 
                 } else {
-                    $response['userInfo'] = 'użytkownik ' . $reqData['email'] . ' nie istnieje';
+                    $response['userInfo'] = "User " . $reqData['email'] . " doesn't exist";
                 }
                 break;
 
@@ -105,8 +105,6 @@ class apiController extends AbstractController
                 break;
 
         }
-
-       
         
         $data = json_encode($response);
 
